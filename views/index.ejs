@@ -1,120 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="Untree.co">
-  <link rel="shortcut icon" href="favicon.png">
-  <link rel="stylesheet" href="/public/css/style.css">
-  <link rel="stylesheet" href="/public/css/from.css">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <meta name="description" content="" />
-    <meta name="keywords" content="bootstrap, bootstrap4" />
-
-	<title>For create ERMS company </title>
-	</head>
-
-	<body>
-
-		<!-- Start Header/Navigation -->
-		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
-
-			<div class="container">
-				<a class="navbar-brand" href="http://localhost:8080/"><img width="40px" src="/public/images/erms.jpg" alt=""><span>.</span></a>
-
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarsFurni">
-					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.html">Home</a>
-						</li>
-						<li><a class="nav-link" href="shop.html">Shop</a></li>
-						<li><a class="nav-link" href="about.html">About us</a></li>
-						<li><a class="nav-link" href="services.html">Services</a></li>
-						<li><a class="nav-link" href="blog.html">Blog</a></li>
-						<li><a class="nav-link" href="contact.html">Contact us</a></li>
-					</ul>
-
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-						<li id="user_register"><a class="nav-link" href="#"><img src="/public/images/user.svg"></a></li>
-					</ul>
-				</div>
-			</div>
-				
-		</nav>
-		<!-- End Header/Navigation -->
-
-
-
-
-
-
-<!-- User register from start -->
-
-        <div id="close" class="heroo">
-			
-			<div class="form-box">
-				<button id="close_popup" class="close_popup">X</button>
-				<div class="form-box-button">
-					<div class="form-box--btn" id="btn"></div>
-					<button class="toggle-btn" onclick="login()">Login</button>
-					<button class="toggle-btn" onclick="register()">Register</button>
-				</div>
-				<div class="form-box-socialIcon">
-					<span class="facebook">F</span>
-					<span class="twitter">T</span>
-					<span class="google">G</span>
-				</div>
-				<form action="/http://localhost:8080/auth/login"  id="login" method="post" enctype="application/x-www-form-urlencoded" class="form-box-inputGroup">
-					<input type="text" class="input-field-log" placeholder="Username or email" required>
-					<input type="text" class="input-field-log" placeholder="Enter your password" required>
-					<input type="checkbox"  class="chech-box"><span>REmember password</span>
-					<button type="submit" class="submit-btn">Log in</button>
-				</form>
-
-
-				<div id="register" class="form-box-inputGroup">
-					<div class="input-group has-validation">
-						<input type="text" name="username" id="username" placeholder="Enter your username"  class="input-field is-invalid">
-                    <div class="invalid-feedback">
-						username
-                    </div>
-					</div>
-
-					<div class="input-group has-validation">
-						<input type="email" name="email" id="email" placeholder="Enter you email" class="input-field is-invalid">
-                    <div class="invalid-feedback">
-						email
-                    </div>
-					</div>
-
-					<div class="input-group has-validation">
-						<input type="password" name="password" id="password" placeholder="Enter your password"  class="input-field is-invalid">
-                    <div class="invalid-feedback">
-                
-						password
-                    </div>
-					</div>
-
-					<div class="input-group has-validation">
-						<input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirmPassword"  class="input-field is-invalid">
-                    <div class="invalid-feedback">
-                
-						confirm password
-                    </div>
-					</div>
-					
-					<input type="checkbox"  class="chech-box"><span>I agree to the terms</span>
-					<button type="submit" class="submit-btn" onclick="submit()">Register</button>
-				</div>
-
-			</div>
-		</div>
-<!-- User register from end -->
+<%- include("./partial/header.ejs")%>
 
 
 
@@ -154,19 +38,24 @@
 		<script>
 
 			const submit = async () =>{
-				let username = document.getElementById('username').value
-				let email = document.getElementById('email').value
-				let password = document.getElementById('password').value
-				let confirmPassword = document.getElementById('confirmPassword').value
+				let username = document.getElementById('username')
+				let email = document.getElementById('email')
+				let password = document.getElementById('password')
+				let confirmPassword = document.getElementById('confirmPassword')
+
+				let usernaem_error = document.getElementById('username-error')
+				let email_error = document.getElementById('email-error')
+				let password_error = document.getElementById('password-error')
+				let confirpass_error = document.getElementById('confirmpassword-error')
 
 				let close = document.getElementById("close")
 				
 				try {
 					let value = await {
-					username: username,
-					email:email,
-					password: password,
-					confirmPassword: confirmPassword
+					username: username.value,
+					email:email.value,
+					password: password.value,
+					confirmPassword: confirmPassword.value
 				}
 					let sumbitUrl =await genarateReques('http://localhost:8080/auth/signup','POST', value)
 					
@@ -177,9 +66,36 @@
 					return res.json()
 				})
 				.then(res => {
-					console.log(res)
+					
 					if(!res.error){
 						close.style.display = 'none';
+					}else{
+						for(let i = 0; i < res.error.length; i++){
+						switch (res.error[i].param) {
+						case 'username':
+							console.log(res.error[i].msg)
+							username.classList.add('is-invalid')
+							usernaem_error.innerText= res.error[i].msg
+							break;
+						case "email":
+							console.log(res.error[i].msg)
+							email.classList.add('is-invalid')
+							email_error.innerText= res.error[i].msg
+							break;
+						case "password":
+							console.log(res.error[i].msg)
+							password.classList.add('is-invalid')
+							password_error.innerText= res.error[i].msg
+							break;
+						case "confirmPassword":
+							console.log(res.error[i].msg)
+							confirmPassword.classList.add('is-invalid')
+							confirpass_error.innerText= res.error[i].msg
+							break;
+						default:
+							break;
+					}
+					}
 					}
 
 				})

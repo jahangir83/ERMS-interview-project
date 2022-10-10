@@ -9,4 +9,9 @@ Router.post('/login', loginValid, userLogin)
 
 
 
+Router.get('/profile',(req, res) => {
+    res.render('pages/editeProfile.ejs')
+    // res.send("HI")
+})
+
 module.exports = Router

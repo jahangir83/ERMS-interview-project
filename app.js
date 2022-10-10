@@ -11,7 +11,7 @@ const setupMiddleware = require('./Middleware/Middleware')
 setupMiddleware(app)
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-
+ 
 
 //TODO: 
 //Views engine setup

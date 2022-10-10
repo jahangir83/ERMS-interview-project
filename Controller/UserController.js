@@ -16,12 +16,12 @@ const addUser = async (req, res, next) => {
 
     let { username, password, email, confirmPassword } = req.body
     let values = {username, email, password, } 
-    let Errors = validationResult(req)
+    let Errors = validationResult(req).formatWith(err => {return {params: err.param, msg: err.msg}})
     console.log(username, email, password)
     if(!Errors.isEmpty()){
 
         return res.json({
-            error: Errors,
+            error: Errors.errors,
             values: req.body.username
         })
     }
