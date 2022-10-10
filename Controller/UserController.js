@@ -1,0 +1,200 @@
+const db = require("../Model/DMBS")
+
+const bcrypt = require('bcrypt')
+const {validationResult} = require('express-validator')
+const multer = require('multer')
+const path = require('path')
+
+const {Op} = require("sequelize")
+
+// create main Model
+const Users = db.users
+const Profile = db.profile
+
+
+const addUser = async (req, res, next) => {
+
+    let { username, password, email, confirmPassword } = req.body
+    let values = {username, email, password, } 
+    let Errors = validationResult(req)
+    console.log(username, email, password)
+    if(!Errors.isEmpty()){
+
+        return res.json({
+            error: Errors,
+            values: req.body.username
+        })
+    }
+
+    try {
+        //User password hasing with brypt
+        let hashPass = await bcrypt.hash(password, 11);
+        const users = await Users.create({
+            username: username,
+            email: email,
+            password: hashPass
+        })
+        res.status(200).json(users)
+    console.log(users)
+
+
+    } catch (error) {
+        next(error)
+        console.log(error);
+    }
+
+
+
+
+}
+//Login user
+
+const userLogin = async(req, res, next) =>{
+    let {username , email, password} = req.body;
+
+    
+    let Errors = validationResult(req);
+
+    if(!Errors.isEmpty()){
+
+    }
+
+    try {
+        let matchUser = await Users.findOne({
+            where:{
+                [Op.or]:[
+                    
+                    {username: username},
+                    {email: email}
+                    
+                ]
+            }
+        })
+        if(matchUser){
+
+            let matchPass = await bcrypt.compare(password, matchUser.password)
+
+            if(matchPass){
+                req.session.isLoggedIn = true
+                req.session.user = matchUser
+                req.session.save(err => {
+                if (err) {
+                    return next(err)
+                }
+                
+                res.json(req.session)
+                })
+            }else{
+                res.json("password not match!")
+            }
+        }else{
+            res.json("user not math ")
+        }
+
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+// Get user Data
+const GetData = async(req, res) =>{
+    let user_id = req.params.id
+console.log(user_id);
+    let Data = await Users.findOne({
+        where:{
+            id: user_id 
+        },
+       
+       
+    });
+    if (Data === null) {
+        console.log('Not found!');
+      } else {
+        // console.log(Data instanceof Data); //true
+        // Its primary key is 123
+        res.json(Data) 
+      }
+}
+
+const update =async (req, res) =>{
+    let user_id = req.params.id
+    
+
+    let result = await Profile.findOne({
+        where:{
+            userId: user_id
+        }
+    })
+    if(result != null && result.userId == user_id){
+        
+        result.set({
+            title: "update title",
+            fullname: "update fullname",
+            email: "update@gmail.com"
+        })
+        await result.save();
+        res.send("sucess")
+
+    }else{
+        console.log("No update ")
+    }
+}
+
+const deleteUser = async (req, res) => {
+    let user_id = req.params.id
+
+    let finsAndSelect = await Profile.findOne({
+        where:{
+            id: user_id
+        }
+    });
+    if(finsAndSelect != null && finsAndSelect.id == user_id){
+        
+        let value = finsAndSelect;
+        await finsAndSelect.destroy();
+        res.send("delete sucess", value)
+
+    }else{
+        console.log("No delete ")
+        res.send("delete unsucess!")
+
+    }
+
+
+}
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '/public/uploadImage')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: '1000000' },
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png|gif/
+        const mimeType = fileTypes.test(file.mimetype)  
+        const extname = fileTypes.test(path.extname(file.originalname))
+
+        if(mimeType && extname) {
+            return cb(null, true)
+        }
+        cb('Give proper files formate to upload')
+    }
+}).any()
+
+
+module.exports = {
+    addUser,
+    userLogin,
+    upload,
+    GetData,
+    update,
+    deleteUser
+}
