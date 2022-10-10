@@ -70,8 +70,19 @@
 					<span class="google">G</span>
 				</div>
 				<form action="/http://localhost:8080/auth/login"  id="login" method="post" enctype="application/x-www-form-urlencoded" class="form-box-inputGroup">
-					<input type="text" class="input-field-log" placeholder="Username or email" required>
-					<input type="text" class="input-field-log" placeholder="Enter your password" required>
+					<div class="input-group has-validation">
+						<input type="email" name="email" id="email" placeholder="Enter you email" class="input-field is-invalid">
+                    <div class="invalid-feedback" id="email-error">
+						
+                    </div>
+					</div>
+
+					<div class="input-group has-validation">
+						<input type="password" name="password" id="password" placeholder="Enter your password"  class="input-field ">
+                    <div class="invalid-feedback" id="password-error">
+                
+                    </div>
+					</div>
 					<input type="checkbox"  class="chech-box"><span>REmember password</span>
 					<button type="submit" class="submit-btn">Log in</button>
 				</form>
@@ -88,7 +99,7 @@
 					<div class="input-group has-validation">
 						<input type="email" name="email" id="email" placeholder="Enter you email" class="input-field is-invalid">
                     <div class="invalid-feedback" id="email-error">
-						email
+						
                     </div>
 					</div>
 
@@ -96,7 +107,6 @@
 						<input type="password" name="password" id="password" placeholder="Enter your password"  class="input-field ">
                     <div class="invalid-feedback" id="password-error">
                 
-						password
                     </div>
 					</div>
 
