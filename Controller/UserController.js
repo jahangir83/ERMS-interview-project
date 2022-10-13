@@ -17,7 +17,7 @@ const addUser = async (req, res, next) => {
     let { username, password, email, confirmPassword } = req.body
     let values = {username, email, password, } 
     let Errors = validationResult(req).formatWith(err => {return {params: err.param, msg: err.msg}})
-    console.log(username, email, password)
+
     if(!Errors.isEmpty()){
 
         return res.json({
@@ -50,24 +50,22 @@ const addUser = async (req, res, next) => {
 //Login user
 
 const userLogin = async(req, res, next) =>{
-    let {username , email, password} = req.body;
+    let { email, password} = req.body;
 
     
-    let Errors = validationResult(req);
+    let Errors = validationResult(req).formatWith(err => {return {params: err.param, msg: err.msg}});
 
     if(!Errors.isEmpty()){
-
+        return res.json({
+            error: Errors.errors,
+            values: req.body
+        })
     }
 
     try {
         let matchUser = await Users.findOne({
             where:{
-                [Op.or]:[
-                    
-                    {username: username},
-                    {email: email}
-                    
-                ]
+                email: email
             }
         })
         if(matchUser){
@@ -82,10 +80,17 @@ const userLogin = async(req, res, next) =>{
                     return next(err)
                 }
                 
-                res.json(req.session)
+                res.json({
+                    jahangri:"jajaja"
+                })
                 })
             }else{
-                res.json("password not match!")
+                res.json({
+                    error:[
+                    {param:'password', msg: 'you password not mathch'},
+
+                    ]
+                   })
             }
         }else{
             res.json("user not math ")

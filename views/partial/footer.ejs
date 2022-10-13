@@ -1,4 +1,4 @@
-
+<!-- 
 
         <script>
 			let x = document.getElementById("login")
@@ -71,15 +71,15 @@
 						case 'username':
 							console.log(res.error[i].msg)
 							username.classList.add('is-invalid')
-							usernaem_error.innerText= res.error[i].msg
+							usernaem_error.style.display = 'none'
 							break;
 						case "email":
 							console.log(res.error[i].msg)
 							email.classList.add('is-invalid')
-							email_error.innerText= res.error[i].msg
+							email_error.innerHTML= res.error[i].msg
 							break;
 						case "password":
-							console.log(res.error[i].msg)
+							console.log(res.error[i].msg, "password")
 							password.classList.add('is-invalid')
 							password_error.innerText= res.error[i].msg
 							break;

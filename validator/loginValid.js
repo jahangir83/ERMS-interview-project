@@ -2,20 +2,6 @@ const db = require('../Model/DMBS')
 const { body } = require('express-validator')
 let User = db.users
 const loginValid = [
-    body('username')
-        .custom(async username => {
-
-        let user = await User.findOne({
-            where:{
-                username: username
-            },
-        })
-        if (!user) {
-            throw new Error("Username Not Found")
-        }
-        })
-        .trim()
-    ,
     body('email')
         .not()
         .isEmpty()

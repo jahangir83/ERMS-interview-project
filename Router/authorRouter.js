@@ -10,7 +10,14 @@ Router.post('/login', loginValid, userLogin)
 
 
 Router.get('/profile',(req, res) => {
-    res.render('pages/editeProfile.ejs')
+    if(req.session.isLoggedIn){
+
+        res.render('pages/editeProfile.ejs')
+    }else{
+        res.render('index'),{
+            error:'Please login'
+        }
+    }
     // res.send("HI")
 })
 
