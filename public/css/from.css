@@ -100,6 +100,7 @@ background: #7ed56f;
   
  .form-box-inputGroup .input-field{
   position: relative;
+
         width: 100%;
         padding: 4px  0;
         margin: 5px 0;
@@ -109,7 +110,7 @@ background: #7ed56f;
         border: 1px solid #7ed56f;
         border-radius: 15px;
         outline: none;
-        background: transparent;
+        background: #cccfd9;
       }
       .form-box-inputGroup .input-field-log{
         position: relative;

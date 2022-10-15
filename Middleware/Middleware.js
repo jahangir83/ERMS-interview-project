@@ -4,18 +4,24 @@ const morgan = require('morgan')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+const SessionStore  = require("express-session-sequelize")(session.Store)
+
+const db = require("../Model/DMBS").sequelize
 
 const oneDay = 1000 * 60 * 60 * 24;
-
+const sequelizeSessionStore = new SessionStore({
+    db:db
+});
 const Middlewere = [
     cors(),
     morgan("dev"),
- 
+    cookieParser(),
     session({
-        secret: "thisProjectVeryScecret",
+        secret: "thisProjectVeryScecret",  
         resave: false,
         saveUninitialized: false,
         cookie: { maxAge: oneDay },
+        store: sequelizeSessionStore
     }),
 
 

@@ -6,13 +6,11 @@ module.exports = (sequelize, DataTypes) => {
         fullname:{
             type: DataTypes.STRING,
             allowNull:false,
+        
         },
-        profilePic:{
-            type : DataTypes.STRING
-        },
-        title:{
-            type: DataTypes.STRING,
-            allowNull : false
+        fathername:{
+            type : DataTypes.STRING,
+            allowNull: false
         },
         email: {
             type    : DataTypes.STRING,
@@ -22,37 +20,30 @@ module.exports = (sequelize, DataTypes) => {
                 isEmail : true
             }
         },
-        discription:{
+        Address:{
             type: DataTypes.TEXT
         },
         dateOfBrit:{
-            type: DataTypes.TEXT
+            type: DataTypes.STRING
         },
         gender:{
-            type: DataTypes.TEXT
+            type: DataTypes.STRING
         },
         age:{
             type: DataTypes.INTEGER
         },
         phone:{
             type: DataTypes.INTEGER
+
         }, 
-        qualification:{
-            type: DataTypes.STRING
-        },
         language:{
             type: DataTypes.STRING 
         },
-        // links: [
-        //     {website: DataTypes.STRING},
-        //    { facebook: DataTypes.STRING},
-        //     {twitter: DataTypes.STRING},
-        //     {github: DataTypes.STRING}
-        // ], 
+        profilePic:{
+            type :DataTypes.STRING,
+            
+        }
 
-     
-
-        
     })
 
     return Profile;

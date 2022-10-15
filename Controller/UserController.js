@@ -34,8 +34,18 @@ const addUser = async (req, res, next) => {
             email: email,
             password: hashPass
         })
-        res.status(200).json(users)
-    console.log(users)
+        if(users){
+            req.session.isLoggedIn = true
+            req.session.user = users
+            req.session.save(err => {
+            if (err) {
+                return next(err)
+            }
+            
+            res.status(200).json(users)
+            })
+        }
+    
 
 
     } catch (error) {
@@ -81,13 +91,13 @@ const userLogin = async(req, res, next) =>{
                 }
                 
                 res.json({
-                    jahangri:"jajaja"
+                    matchUser
                 })
                 })
             }else{
                 res.json({
                     error:[
-                    {param:'password', msg: 'you password not mathch'},
+                    {param:'password', msg: 'you password not mathch'}, 
 
                     ]
                    })

@@ -7,6 +7,7 @@ const {Sequelize, DataTypes
 } = require('sequelize');
 
 
+
 const sequelize = new Sequelize(
     dbConfig.DB,
     dbConfig.USER,
@@ -39,24 +40,33 @@ const db = {}
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 
+// Every user model include Database
 db.users = require("./UserModel.js")(sequelize, DataTypes)
 db.profile = require("./Profile.js")(sequelize, DataTypes)
+db.userforenkey = require("./FriginKey.js")(sequelize, DataTypes)
+db.Userpassport = require("./UserPassport.js")(sequelize, DataTypes)
+db.Education = require("./Education.js")(sequelize, DataTypes)
+
 
 db.sequelize.sync({ force: false })
 .then(() => {
-    console.log('yes re-sync done!')
+    console.log('yes You have sussessfully connected on DATABASE!')
     // console.log(db);
 }) 
 .catch((err) => {
-    console.log(err);
+    console.log(err + "+++++++++++++++++++++++++++++++++++++++++++++++++");
 } )
 
 
 
 //one to many relationship 
 
-db.users.hasMany(db.profile)
+// db.users.hasMany(db.profile)
 
-db.profile.belongsTo(db.users)
+// db.profile.belongsTo(db.users)
+
+db.users.belongsToMany(db.profile, { through: db.userforenkey });
+db.profile.belongsToMany(db.users, { through: db.userforenkey});
+
 
 module.exports = db

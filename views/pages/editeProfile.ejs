@@ -1,51 +1,221 @@
+
+
 <%- include("../partial/header.ejs")%>
 
 
-<div class="userprofile">
-	<div class="container rounded bg-white mt-5 mb-5">
+
+<div class="row">
+	<div class="col-md-2">
+		
+	</div>
+
+	<div class="col-md-10">
 		<div class="row">
-			<div class="col-md-3 border-right">
-				<div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
-			</div>
-			<div class="col-md-5 border-right">
-				<div class="p-3 py-5">
-					<div class="d-flex justify-content-between align-items-center mb-3">
-						<h4 class="text-right">Profile Settings</h4>
-					</div>
-					<div class="row mt-2">
-						<div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-						<div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
-					</div>
-					<div class="row mt-3">
-						<div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-						<div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-						<div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-						<div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-						<div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-						<div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-						<div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-						<div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
-					</div>
-					<div class="row mt-3">
-						<div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-						<div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-					</div>
-					<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+			<div class="col-md-9 offset-md-2">
+				<div class="card card-body my-5">
+					<h1>Create user profile </h1>
+
+				<div class="profile-pics">
+					<img width="300" height="200s"
+						src="/public/images/erms.jpg"
+						 alt="profile pics"
+						 class="img-fluid img-thumbnail "
+						 id="showImage"
+					>
+
+					<form 
+						action="/upload/profilePica"
+						id="profilePicsFrom"
+						class="my-2"
+						
+					>
+						<input 
+						   type="file" 
+						   onchange="shoImage(this)"
+						   name="profilePics" 
+						   id="profilePicsFile" 
+						   accept="image/*"
+						>
+						<input
+						   type="button" 
+						   value="Remove Pics" 
+						   class="btn btn-danger btn-sm my-2"
+						 
+							id="removeProfilePics" 
+						>
+					</form>  
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-3 py-5">
-					<div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-					<div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-					<div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+			
+				<form action="/deshbord/edit-profile" method="POST">
+					<div class="form-group mb-2">
+						<label for="name">Enter Your Full Name</label>
+						<input
+							type="text"
+							name="fullname"
+							class="form-control 'is-invalid'" 
+							placeholder="Enter Your Full Name " 
+							
+							id="fullname"
+						>
+						<div class="invalid-feedback">
+
+						</div>
+					</div>
+					<!-- father name -->
+					<div class="form-group mb-2">
+						<label for="name">Enter Your Father Name</label>
+						<input
+							type="text"
+							name="fathername"
+							class="form-control 'is-invalid'" 
+							placeholder="Enter Your Father Name " 
+							
+							id="fathername"
+						>
+						<div class="invalid-feedback">
+
+						</div>
+					</div>
+					<!-- Email -->
+					<div class="form-group mb-2">
+						<label for="email">Enter Your Email</label>
+						<input
+							type="text"
+							name="email"
+							class="form-control" 
+							placeholder="Enter Your Name " 
+							id="email"
+							disabled
+						>
+					</div>
+					<!-- Address -->
+					<div class="form-group mb-2">
+						<label for="email" class="exampleFormControlTextarea1">Enter Your Address</label>
+						<textarea class="form-control" 
+						name="address" 
+						id="exampleFormControlTextarea1" 
+						rows="3">
+					</textarea>
+					</div>
+					<!-- Date of Birth -->
+					<div class="form-group mb-2 mb-2"> <!-- Date input -->
+						<label class="control-label" for="date">Date Of Birth</label>
+						<input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date"/>
+					  </div>
+
+					  <!-- Gender -->
+					  <div class="form-group mb-2">
+						
+							<label class="control-label" for="gender">Gender</label>
+						  
+						  <select class="custom-select form-control" id="gender">
+							<option selected>Choose...</option>
+							<option value="1">Male</option>
+							<option value="2">Famale</option>
+							<option value="3">Others</option>
+						  </select>
+
+					  </div>
+					  <!-- Age -->
+					<div class="form-group mb-2">
+						<label for="title">Age</label>
+						<input
+							type="number"
+
+							name="age"
+							class="form-control  'is-invalid' " 
+							placeholder="Enter Your Age " 
+						   
+							id="age"
+						>
+						<div class="invalid-feedback">
+
+						</div>
+					</div>
+					<!-- Phone -->
+					<div class="form-group mb-2">
+						<label for="bio">Enter Your Phone Number</label>
+						<input
+						type="number"
+							name="phone"
+							class="form-control  'is-invalid'" 
+							id="phone"
+						
+							
+						>
+						<div class="invalid-feedback">
+
+						</div>
+					</div>
+					<!-- Language -->
+					<div class="form-group mb-2">
+						<label for="language">Write the language you know</label>
+						<input
+							name="language"
+							class="form-control  'is-invalid'" 
+							id="language"
+							placeholder=" You write this way like = Bangla, English "
+						
+							
+						>
+						<div class="invalid-feedback">
+
+						</div>
+					</div>
+					<input type="submit" value="Save The Profile" class="btn btn-primary">
+					
+				</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-	</div>
+
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="crop-modal" data-backdrop="static" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+	<h5 class="modal-title" id="staticBackdropLabel">Resize Your Image</h5>
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+  </div>
+  <div class="modal-body">
+	<div id="cropped-image"></div>
+  </div>
+  <div class="modal-footer">
+	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	<button class="btn btn-primary" id="upload-image" type="button">Upload</button>
+  </div>
+</div>
+</div>
 </div>
 
 
+<script>
+	let file = document.getElementById("profilePicsFile")
+	let img = document.getElementById("showImage")
+	let removeImage = document.getElementById("removeProfilePics")
+	function shoImage(input){
+		console.log(input)
+		if (input.files && input.files[0]) {
+			let fileReader = new FileReader()
+
+			fileReader.onload = function(e){
+				img.src = e.target.result
+			}
+			fileReader.readAsDataURL(input.files[0])
+		}
+	}
+
+	removeImage.addEventListener('click', () => {
+		console.log("jjjjj");
+		file.value = "";
+		img.src = ''
+	})
+</script>
 
 <%- include("../partial/footer.ejs")%>

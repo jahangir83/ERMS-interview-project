@@ -1,3 +1,11 @@
+<!-- 
+	Ttitle : This is header and navigation file 
+	Author: MD Jahangri alam
+	Description: 
+	Date: 13 October 2022
+ -->
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,11 +40,11 @@
 						<li class="nav-item active">
 							<a class="nav-link" href="index.html">Home</a>
 						</li>
-						<li><a class="nav-link" href="/auth/profile">Create Profile</a></li>
-						<li><a class="nav-link" href="">View profile</a></li>
-						<li><a class="nav-link" href="services.html">Services</a></li>
+						<li class="nav-item active"><a class="nav-link" href="/auth/profile">Create Profile</a></li>
+						<li class="nav-item"><a class="nav-link" href="">View profile</a></li>
+						<li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
 
-						<li><a class="nav-link" href="contact.html">Contact us</a></li>
+						<li class="nav-item"><a class="nav-link" href="contact.html">Contact us</a></li>
 					</ul>
 
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5" id="userIcon">
@@ -45,6 +53,8 @@
 				</div>
 			</div>
 				
+		
+
 		</nav>
 		<!-- End Header/Navigation -->
 
@@ -131,7 +141,7 @@
 <!-- user login and register icon change  -->
 <script>
 	let userIcon = document.getElementById('userIcon');
-		console.log(JSON.parse(sessionStorage.getItem('sessionObject')));
+		
 	if(!JSON.parse(sessionStorage.getItem('sessionObject'))){
 		let usericonimg = document.createElement('li')
 		usericonimg.id = 'user_register';
@@ -149,7 +159,7 @@
 
 		if(JSON.parse(sessionStorage.getItem('sessionObject')).someOtherSessionData.islogin){
 			let usericonLogout = document.createElement('li')
-			usericonLogout.id = 'user_register';
+			usericonLogout.id = 'user_logout';
 			let userlink = document.createElement('a')
 			userlink.href = '#'
 			userlink.innerText = 'Log out'
@@ -195,9 +205,11 @@
 	closeBtn.addEventListener('click', () => {
 		close.style.display = "none"
 	})
-	userRegister.addEventListener('click', () => {
+	if(userRegister){
+		userRegister.addEventListener('click', () => {
 		close.style.display = "block"
 	})
+	}
 	// c.style.display = "none"
 	
 
@@ -226,6 +238,10 @@
 	let email_error = document.getElementById('emailError')
 	let password_error = document.getElementById('passwordError')
 	let confirpass_error = document.getElementById('confirmpassword-error')
+	
+
+
+
 
 	const submit = async () =>{
 		
@@ -248,19 +264,23 @@
 
 				if(!res.error){
 					close.style.display = 'none';
-					window.location.replace("http://www.w3schools.com");
+					window.location.replace("http://localhost:8080/auth/profile");
 				}else{
 
 					username.classList.remove('is-invalid')
+					username.style.border = ' 1px solid #7ed56f'
 					usernaem_error.innerText = ''
 
 					emailvalue.classList.remove('is-invalid')
+					emailvalue.style.border = ' 1px solid #7ed56f'
 					email_error.innerText = ''
 
 					inputPassword.classList.remove('is-invalid')
+					inputPassword.style.border = ' 1px solid #7ed56f'
 					password_error.innerText = ''
 
 					confirmPassword.classList.remove('is-invalid')
+					confirmPassword.style.border = ' 1px solid #7ed56f'
 					confirpass_error.innerText = ''
 
 
@@ -269,20 +289,23 @@
 					case 'username':
 						
 						username.classList.add('is-invalid')
+						username.style.border = ' 1px solid red'
 						usernaem_error.innerText = res.error[i].msg
 						break;
 					case'email':
 						emailvalue.classList.add('is-invalid')
+						emailvalue.style.border = ' 1px solid red'
 						email_error.innerText = res.error[i].msg
 						break;
 					case "password":
-						
 						inputPassword.classList.add('is-invalid')
+						inputPassword.style.border = ' 1px solid red'
 						password_error.innerText= res.error[i].msg
 						break;
 					case "confirmPassword":
 						
 						confirmPassword.classList.add('is-invalid')
+						confirmPassword.style.border = ' 1px solid red'
 						confirpass_error.innerText= res.error[i].msg
 						break;
 					default:
@@ -330,11 +353,14 @@
 		
 		if(userORemail.value == ''){
 			userORemail.classList.add('is-invalid')
+			userORemail.style.border = ' 1px solid red'
 			LogErrorEmail.innerText = "please enter your email"
 		}else if(userLogPass.value == ''){
 			userORemail.classList.remove('is-invalid')
+			userORemail.style.border = ' 1px solid #7ed56f'
 			LogErrorEmail.innerText = ""
 			userLogPass.classList.add('is-invalid')
+			userLogPass.style.border = ' 1px solid red'
 			LogPassError.innerText= 'please enter you password'
 			return
 		}else{
@@ -350,7 +376,7 @@
 			
 			}
 			let loginUrl =await genarateReques('http://localhost:8080/auth/login','POST', value)
-			
+
 			fetch(loginUrl)
 
 			.then((res) =>{ return res.json()})
